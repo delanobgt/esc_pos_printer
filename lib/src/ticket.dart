@@ -373,7 +373,7 @@ class Ticket {
   /// Print image using (ESC *) command
   ///
   /// [image] is an instanse of class from [Image library](https://pub.dev/packages/image)
-  void image(Image imgSrc) {
+  void image(Image imgSrc, {int lineSpacing = 16}) {
     final Image image = Image.from(imgSrc); // make a copy
     const bool highDensityHorizontal = true;
     const bool highDensityVertical = true;
@@ -402,7 +402,7 @@ class Ticket {
     header.addAll(_intLowHigh(heightPx, 2));
 
     // Adjust line spacing (for 16-unit line feeds): ESC 3 0x10 (HEX: 0x1b 0x33 0x10)
-    rawBytes([27, 51, 16]);
+    rawBytes([27, 51, lineSpacing]);
     for (int i = 0; i < blobs.length; ++i) {
       rawBytes(List.from(header)..addAll(blobs[i])..addAll('\n'.codeUnits));
     }
