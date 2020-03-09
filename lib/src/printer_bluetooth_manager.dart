@@ -72,7 +72,7 @@ class PrinterBluetoothManager {
   Future<PosPrintResult> writeBytes(List<int> bytes) async {
     final Completer<PosPrintResult> completer = Completer();
 
-    const int timeout = 5;
+    const int timeout = 10;
     if (_selectedPrinter == null) {
       return Future<PosPrintResult>.value(PosPrintResult.printerNotSelected);
     } else if (_isScanning.value) {
@@ -100,7 +100,7 @@ class PrinterBluetoothManager {
             completer.complete(PosPrintResult.success);
           }
           // TODO sending disconnect signal should be event-based
-          _runDelayed(3).then((dynamic v) async {
+          _runDelayed(8).then((dynamic v) async {
             await _bluetoothManager.disconnect();
             _isPrinting = false;
           });
